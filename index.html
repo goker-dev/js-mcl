@@ -1,0 +1,167 @@
+no<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>JS-MCL: Monte Carlo Localization Simulator</title>
+        <meta name="description" content="JS-MCL : JavaScript Monte Carlo Localization Simulator" />
+        <meta name="author" content="goker" />
+        <link rel="shortcut icon" href="https://gokercebeci.com/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <link rel="stylesheet" href="default.css" />
+    </head>
+    <body>
+        <header>
+            <h1>JS-MCL : JavaScript Monte Carlo Localization Simulator</h1>
+            <nav>
+                <a class="about">About</a>
+                <a class="references">References</a>
+                <a class="usage">Usage</a>
+                <a class="controls">Controls</a>
+                <a class="simulator">Simulator</a>
+                <a class="demo">Demo Video</a>
+            </nav>
+        </header>
+        <div id="page-wrap">
+            <section id="simulator">
+                <div id="map"></div>
+                <div class="log">
+                    <textarea id="log"></textarea>
+                </div>
+                <img id="arrow-keys" alt="arrow keys" class="usage" src="images/arrow-keys.png"/>
+            </section>
+        </div>
+
+        <div id="modal">
+            <div id="modal-cell">
+                <div id="modal-content">
+                    <a class="x">X</a>
+                    <section id="about">
+                        <h1>About</h1>
+                        <h3>JavaScript Monte Carlo Localization Simulator</h3>
+                        <p>
+                            <b>JS-MCL</b> is a basic Monte Carlo Localization Simulator. 
+                            <i>It uses Monte Carlo methods to generate the probability distribution of possible locations.</i>
+                            It has a <b>UI</b> and <b>controls</b> feature to test different probabilities.
+                            Please visit <a class="usage">Usage</a> section. 
+                        </p>
+                        <p>
+                            I developed this as my homework for <b>Probabilistic Robotic</b> course of M.Sc. Programme 
+                            in Computer Engineering in Yildiz Technical University.
+                            <a http://www.bologna.yildiz.edu.tr/index.php?r=course/view&id=6900&aid=3>http://www.bologna.yildiz.edu.tr/index.php?r=course/view&id=6900&aid=3</a>
+                        </p>
+                    </section>
+                    <section id="references">
+                        <h1>References</h1>
+                        <p>
+                            It's simple <i>Python</i> version was developed by  Feynman Liang
+                            as a response <b>Udacity</b> (www.udacity.com) <b>CS 373</b> course.
+                            <br/>
+                            <a href="https://github.com/feynmanliang/MonteCarloLocalization">https://github.com/feynmanliang/MonteCarloLocalization</a>
+                            <br/>
+                            <a href="https://www.udacity.com/course/cs373">https://www.udacity.com/course/cs373</a>
+                        </p>
+                        <br/>
+                        <a href="http://en.wikipedia.org/wiki/Monte_Carlo_localization">Monte Carlo Localization</a>
+                        <br/>
+                        <a href="http://robots.stanford.edu/papers/thrun.robust-mcl.html">Robust Monte Carlo Localization for Mobile Robots
+                        </a>
+                    </section>
+                    <section id="usage">
+                        <h1>Usage</h1>
+                        <p>
+                            <b>Map:</b> Map is created with colorful rectangles as a 2D matrix.
+                            Each rectangle has an index number on background and 
+                            a probability bar (to show probability distribution) on its right side.
+                            Rectangles represent the first char of color name in <b>controls</b> section.
+                            You can use <b>r</b>ed, <b>g</b>reen, <b>b</b>lue, <b>y</b>ellow colors to generate a map.
+                        </p>
+                        <p>
+                            <b>Robot:</b> Robot is blue and has an oval shape. 
+                            You can move it on the map step by step with keyboard arrow buttons.
+                            Robot calculates probability distribution of possible locations after each movement.
+                            Also you can set default position of robot by X and Y in <b>controls</b> section.
+                        </p>
+                        <p>
+                            <b>Movement Noise and Sensor Noise:</b> 
+                            Sensor noise corrupt the accuracy of the sensor.
+                            Movement noise corrupt the probability that the robot will move vs stay in current position.
+                            They should be a number between 1 and 0. 
+                            If you set 0.5, the meaning measurements will be 50 percent correct.
+                        </p>
+                        <p>
+                            <b>Kidnapped Robot Problem:</b> 
+                            It is to simulate a situation where the robot in operation is carried to an arbitrary location.
+                            <br/>
+                            <a href="http://en.wikipedia.org/wiki/Kidnapped_robot_problem">http://en.wikipedia.org/wiki/Kidnapped_robot_problem</a>
+                        </p>
+                    </section>
+                    <section id="controls">
+                        <h1>Controls</h1>
+                        <table>
+                            <tr>
+                                <td>Robot</td>
+                                <td>:</td>
+                                <td class="left">
+                                    <label>Y:<input type="text" name="robot[y]" value="0"/></label>
+                                    <label>X:<input type="text" name="robot[x]" value="0"/></label>
+                                    <label>Movement Noise:<input type="text" name="robot[noise]" value="0.1"/></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sensors</td>
+                                <td>:</td>
+                                <td class="left">
+                                    <label>Noise:<input type="text" name="sensor[noise]" value="0.1"/></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Map</td>
+                                <td>:</td>
+                                <td class="left">
+                                    <textarea name="map"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="center">
+                                    <div id="generate" class="button">< Generate</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Kidnapped Robot Problem</b></td>
+                            </tr>
+                            <tr>
+                                <td>Robot</td>
+                                <td>:</td>
+                                <td class="left">
+                                    <label>Y:<input type="text" name="kidnap[y]" value="3"/></label>
+                                    <label>X:<input type="text" name="kidnap[x]" value="3"/></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="center">
+                                    <div id="kidnap" class="button">Kidnap</div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <a href="https://gokercebeci.com/blog/gobot-mcl">JS-MCL : v1.0.0</a>
+            <p id="developer"> 
+                <a href="https://twitter.com/gokercebeci/status/408493993702338561">feedback</a><span>|</span>
+                developed by <a href="https://gokercebeci.com?feature=js-mcl" title="goker"> goker</a>
+            </p>
+        </footer>
+
+        <script src="jquery-2.0.3.min.js"></script>
+        <script src="default.js"></script>
+        <script src="mcl.js"></script>
+
+    </body>
+</html>
+
